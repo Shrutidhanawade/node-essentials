@@ -1,13 +1,20 @@
+# azure-pipelines-templates/npm-install-template.yml
 parameters:
-  nodeVersion: '16.x'
-  installCommand: 'npm ci'
+  - name: nodeVersion
+    type: string
+    default: '16.x'
+  - name: installCommand
+    type: string
+    default: 'npm install'
 
-steps:
-- task: NodeTool@0
-  inputs:
-    versionSpec: ${{ parameters.nodeVersion }}
-  displayName: 'Install Node.js'
+jobs:
+  - job: InstallJob
+    displayName: 'Install npm packages'
+    steps:
+      - task: NodeTool@0  # Install Node.js
+        inputs:
+          versionSpec: ${{ parameters.nodeVersion }}  # Specify Node.js version
+        displayName: 'Install Node.js'
 
-- script: |
-    ${{ parameters.installCommand }}
-  displayName: 'Install npm dependencies'
+      - script: ${{ parameters.installCommand }}  # Install npm dependencies
+        displayName: 'Install npm packages'
