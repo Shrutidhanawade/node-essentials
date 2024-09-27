@@ -13,5 +13,14 @@ steps:
       versionSpec: ${{ parameters.nodeVersion }}  # Specify Node.js version
     displayName: 'Install Node.js'
 
-  - script: ${{ parameters.installCommand }}  # Install npm dependencies
+  - script: |
+      npm install -g npm  # Ensure npm is installed globally
+      ${{ parameters.installCommand }}  # Install npm dependencies
     displayName: 'Install npm packages'
+ - script: |
+    echo "Node.js version:"
+    node -v
+    echo "npm version:"
+    npm -v  # Check npm version
+    ${{ parameters.installCommand }}  # Install npm dependencies
+  displayName: 'Check Node.js and npm versions'
