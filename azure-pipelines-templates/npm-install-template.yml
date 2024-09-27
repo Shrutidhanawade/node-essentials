@@ -2,21 +2,21 @@
 parameters:
   - name: nodeVersion
     type: string
-    default: '16.x'
+    default: '18.x'  # Update to the correct version
   - name: installCommand
     type: string
     default: 'npm install'
 
 steps:
-  - task: NodeTool@0  # Install Node.js
+  - task: NodeTool@0
     inputs:
-      versionSpec: ${{ parameters.nodeVersion }}  # Specify Node.js version
+      versionSpec: ${{ parameters.nodeVersion }}
     displayName: 'Install Node.js'
 
   - script: |
       echo "Node.js version:"
-      node -v  # Check Node.js version
+      node -v
       echo "npm version:"
-      npm -v  # Check npm version
-      ${{ parameters.installCommand }}  # Install npm dependencies
+      npm -v
+      ${{ parameters.installCommand }}
     displayName: 'Install npm packages'
