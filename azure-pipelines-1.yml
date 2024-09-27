@@ -18,22 +18,3 @@ stages:
               nodeVersion: '18.x'
               installCommand: 'npm install'
 
-  - stage: Build  # Stage for building the application
-    displayName: 'Build Stage'
-    jobs:
-      - job: BuildJob  # Job for building the application
-        displayName: 'Build Application'
-        steps:
-          - template: azure-pipelines-templates/build-template.yml  # Reference build template
-            parameters:
-              buildCommand: 'npm run build'
-
-  - stage: Deploy  # Stage for deploying the application
-    displayName: 'Deploy Stage'
-    jobs:
-      - job: DeployJob  # Job for deployment
-        displayName: 'Deploy Application'
-        steps:
-          - template: azure-pipelines-templates/deploy-template.yml  # Reference deploy template
-            parameters:
-              deployCommand: './deploy.sh'
