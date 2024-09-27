@@ -4,9 +4,6 @@ parameters:
     type: string
     default: './deploy.sh'
 
-jobs:
-  - job: DeployJob
-    displayName: 'Deploy Application'
-    steps:
-      - script: ${{ parameters.deployCommand }}  # Execute the deployment script
-        displayName: 'Deploy the application'
+steps:
+  - script: ${{ parameters.deployCommand }}  # Execute the deployment script
+    displayName: 'Deploy the application'
