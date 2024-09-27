@@ -15,7 +15,7 @@ stages:
         steps:
           - template: azure-pipelines-templates/npm-install-template.yml  # Reference npm install template
             parameters:
-              nodeVersion: '16.x'
+              nodeVersion: '18.x'
               installCommand: 'npm install'
 
   - stage: Build  # Stage for building the application
