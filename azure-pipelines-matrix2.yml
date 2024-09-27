@@ -3,33 +3,23 @@ trigger:
     include:
       - main  # Trigger the pipeline on pushes to the main branch
 
+pool:
+  name: azure-first project
+
 jobs:
-- job: Test
-  displayName: 'Test Application'
+- job: BuildAndTest
   strategy:
     matrix:
-      node18:
-        nodeVersion: '18.x'
-        pool: 'azure-first-project'  # Specify the agent pool for Node.js 18.x
-      node20:
-        nodeVersion: '20.x'
-        pool: 'default'  # Specify the agent pool for Node.js 20.x
-
+      node10:
+        node_version: 10
+      node12:
+        node_version: 12
   pool:
-    name: ${{ matrix.pool }}  # Set the pool for the job based on matrix
-
+    name: default
   steps:
   - task: NodeTool@0
     inputs:
-      versionSpec: ${{ matrix.nodeVersion }}  # Use Node.js version from the matrix
-    displayName: 'Install Node.js'
+      versionSpec: $(node_version)
+  - script: npm install
+  - script: npm test
 
-  - script: |
-      echo "Node.js version:"
-      node -v
-      npm install  # Install npm dependencies
-    displayName: 'Install npm packages'
-
-  - script: |
-      npm run test  # Run your tests
-    displayName: 'Run tests'
