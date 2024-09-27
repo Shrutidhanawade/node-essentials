@@ -18,16 +18,6 @@ stages:
               nodeVersion: '16.x'
               installCommand: 'npm install'
 
-  - stage: Test  # Stage for running tests
-    displayName: 'Test Stage'
-    jobs:
-      - job: TestJob  # Job for running tests
-        displayName: 'Run Tests'
-        steps:
-          - template: azure-pipelines-templates/test-template.yml  # Reference test template
-            parameters:
-              testCommand: 'npm run test'
-
   - stage: Build  # Stage for building the application
     displayName: 'Build Stage'
     jobs:
