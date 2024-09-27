@@ -2,7 +2,7 @@
 parameters:
   - name: nodeVersion
     type: string
-    default: '18.x'  # Update to the correct version
+    default: '18.x'
   - name: installCommand
     type: string
     default: 'npm install'
@@ -18,5 +18,12 @@ steps:
       node -v
       echo "npm version:"
       npm -v
-      ${{ parameters.installCommand }}
+    displayName: 'Check Node.js and npm version'
+
+  - script: |
+      ${{ parameters.installCommand }}  # Install npm dependencies
     displayName: 'Install npm packages'
+
+  - script: |
+      /myagent/_work/_tool/node/18.20.4/x64/bin/npm run build  # Use full path to npm
+    displayName: 'Build the application'
