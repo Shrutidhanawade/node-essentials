@@ -2,22 +2,20 @@ trigger:
 - main
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: azure-first project
 
-trigger:
-- main
-
-pool:
-  vmImage: 'ubuntu-latest'
-
-# Run npm install steps
-- template: azure-pipelines-templates/npm-steps.yml
+# install steps
+- template: azure-pipelines-templates/npm-install-template.yml
   parameters:
     nodeVersion: '16.x'
     installCommand: 'npm install'
 
-# Run build steps
+# Build steps
 - template: azure-pipelines-templates/build-template.yml
   parameters:
     buildCommand: 'npm run build'
 
+# Deploy steps
+- template: azure-pipelines-templates/deploy-template.yml
+  parameters:
+    deployCommand: './deploy.sh'
