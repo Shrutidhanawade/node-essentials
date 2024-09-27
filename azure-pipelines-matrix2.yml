@@ -1,8 +1,8 @@
 trigger:
-- main  # Change this to your main branch
+- main
 
 pool:
-  name: azure-first project  # Specify the VM image you want to use
+  name: azure-first project
 
 jobs:
 - job: BuildAndTest
@@ -19,6 +19,11 @@ jobs:
         NODE_VERSION: '18'
         DB: 'sqlite'
   steps:
+  - task: NodeTool@0
+    inputs:
+      versionSpec: '$(NODE_VERSION)'
+    displayName: 'Install Node.js $(NODE_VERSION)'
+
   - script: |
       echo "Testing in Node version $(NODE_VERSION) with $(DB) database"
       # Install dependencies
