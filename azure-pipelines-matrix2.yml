@@ -9,14 +9,11 @@ jobs:
   displayName: 'Build and Test'
   strategy:
     matrix:
-      Node14_MySQL:
-        NODE_VERSION: '14'
-        DB: 'mysql'
       Node16_Postgres:
-        NODE_VERSION: '16'
+        NODE_VERSION: '14'
         DB: 'postgres'
-      Node18_SQLite:
-        NODE_VERSION: '18'
+      Node20_SQLite:
+        NODE_VERSION: '20'
         DB: 'sqlite'
   steps:
   - task: NodeTool@0
