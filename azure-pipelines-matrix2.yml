@@ -1,25 +1,28 @@
 trigger:
-  branches:
-    include:
-      - main  # Trigger the pipeline on pushes to the main branch
+- main  # Change this to your main branch
 
 pool:
-  name: azure-first project
+  name: azure-first project  # Specify the VM image you want to use
 
 jobs:
 - job: BuildAndTest
+  displayName: 'Build and Test'
   strategy:
     matrix:
-      node10:
-        node_version: 10
-      node12:
-        node_version: 12
-  pool:
-    name: default
+      Node14_MySQL:
+        NODE_VERSION: '14'
+        DB: 'mysql'
+      Node16_Postgres:
+        NODE_VERSION: '16'
+        DB: 'postgres'
+      Node18_SQLite:
+        NODE_VERSION: '18'
+        DB: 'sqlite'
   steps:
-  - task: NodeTool@0
-    inputs:
-      versionSpec: $(node_version)
-  - script: npm install
-  - script: npm test
-
+  - script: |
+      echo "Testing in Node version $(NODE_VERSION) with $(DB) database"
+      # Install dependencies
+      npm install
+      # Run tests
+      npm test
+    displayName: 'Run Tests'
