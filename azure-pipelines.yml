@@ -1,0 +1,50 @@
+# Node.js
+# Build a general Node.js project with npm.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# https://docs.microsoft.com/azure/devops/pipelines/languages/javascript
+
+trigger:
+- main
+
+pool:
+  name: azure-first project
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSource: 'spec'
+    versionSpec: '16.x'
+  displayName: 'Install Node.js'
+# Optionally, create a custom npm cache path via .npmrc
+- script: |
+    echo "cache=${HOME}/.npm" > .npmrc
+  displayName: 'Create .npmrc with custom cache path'
+
+# Restore npm dependencies from cache
+- task: Cache@2
+  inputs:
+    key: 'npm | "$(Agent.OS)" | package-lock.json'
+    restoreKeys: |
+      npm | "$(Agent.OS)"
+    path: $(HOME)/.npm  # Path where npm caches dependencies
+  displayName: 'Restore npm cache'
+
+- script: |
+    npm install
+    npm run build
+  displayName: 'npm install and build'
+  # Cache npm dependencies
+- task: Cache@2
+  inputs:
+    key: 'npm | "$(Agent.OS)" | package-lock.json'
+    path: $(HOME)/.npm  # Path where npm caches dependencies
+  displayName: 'Cache npm dependencies'
+
+# Run build or test steps
+- script: npm run build
+  displayName: 'Build the application'
+- task: Cache@2
+  inputs:
+    key: 'npm | "$(Agent.OS)" | package-lock.json'
+    path: '$(HOME)/.npm'
+    restoreKeys: 'npm | "$(Agent.OS)"'
