@@ -1,0 +1,7 @@
+parameters:
+  testCommand: 'npm test'
+
+steps:
+- script: |
+    ${{ parameters.testCommand }}
+  displayName: 'Run tests'
