@@ -24,6 +24,4 @@ steps:
       ${{ parameters.installCommand }}  # Install npm dependencies
     displayName: 'Install npm packages'
 
-  - script: |
-      /myagent/_work/_tool/node/18.20.4/x64/bin/npm run build  # Use full path to npm
-    displayName: 'Build the application'
+
