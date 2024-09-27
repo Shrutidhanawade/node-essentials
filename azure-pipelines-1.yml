@@ -4,7 +4,7 @@ trigger:
       - main  # Trigger the pipeline on pushes to the main branch
 
 pool:
-  name: azure-first project  # Use the Ubuntu image for the build agent
+  name: 'azure-first project'  # Use your specified agent pool
 
 stages:
   - stage: Install  # Stage for installing npm packages
