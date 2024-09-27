@@ -1,0 +1,7 @@
+parameters:
+  buildCommand: 'npm run build'
+
+steps:
+- script: |
+    ${{ parameters.buildCommand }}
+  displayName: 'Build the application'
