@@ -7,14 +7,11 @@ parameters:
     type: string
     default: 'npm install'
 
-jobs:
-  - job: InstallJob
-    displayName: 'Install npm packages'
-    steps:
-      - task: NodeTool@0  # Install Node.js
-        inputs:
-          versionSpec: ${{ parameters.nodeVersion }}  # Specify Node.js version
-        displayName: 'Install Node.js'
+steps:
+  - task: NodeTool@0  # Install Node.js
+    inputs:
+      versionSpec: ${{ parameters.nodeVersion }}  # Specify Node.js version
+    displayName: 'Install Node.js'
 
-      - script: ${{ parameters.installCommand }}  # Install npm dependencies
-        displayName: 'Install npm packages'
+  - script: ${{ parameters.installCommand }}  # Install npm dependencies
+    displayName: 'Install npm packages'
