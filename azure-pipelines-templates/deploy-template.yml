@@ -1,7 +1,12 @@
+# azure-pipelines-templates/build-template.yml
 parameters:
-  deployCommand: './scripts/deploy.sh'
+  - name: buildCommand
+    type: string
+    default: 'npm run build'
 
-steps:
-- script: |
-    ${{ parameters.deployCommand }}
-  displayName: 'Deploy the application'
+jobs:
+  - job: BuildJob
+    displayName: 'Build Application'
+    steps:
+      - script: ${{ parameters.buildCommand }}  # Build the application
+        displayName: 'Build the application'
