@@ -1,0 +1,13 @@
+parameters:
+  nodeVersion: '16.x'
+  installCommand: 'npm ci'
+
+steps:
+- task: NodeTool@0
+  inputs:
+    versionSpec: ${{ parameters.nodeVersion }}
+  displayName: 'Install Node.js'
+
+- script: |
+    ${{ parameters.installCommand }}
+  displayName: 'Install npm dependencies'
