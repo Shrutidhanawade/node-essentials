@@ -16,5 +16,8 @@
     "nodejs-intro",
     "nodejs-intro-esm",
     "nodejs-route"
-  ]
+  ],
+  "scripts": {
+    "test": "echo 'No tests defined' && exit 0" // Placeholder script
+  }
 }
