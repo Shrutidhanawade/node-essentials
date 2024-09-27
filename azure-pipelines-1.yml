@@ -1,26 +1,49 @@
 trigger:
-- main
+  branches:
+    include:
+      - main  # Trigger the pipeline on pushes to the main branch
 
 pool:
-  vmImage: 'ubuntu-latest'
+  name: azure-first project  # Use the Ubuntu image for the build agent
 
-# npm install steps
-- template: azure-pipelines-templates/npm-install-template.yml
-  parameters:
-    nodeVersion: '16.x'
-    installCommand: 'npm install'
+stages:
+  - stage: Install  # Stage for installing npm packages
+    displayName: 'Install Stage'
+    jobs:
+      - job: InstallJob  # Job for installing npm packages
+        displayName: 'Install npm packages'
+        steps:
+          - template: azure-pipelines-templates/npm-install-template.yml  # Reference npm install template
+            parameters:
+              nodeVersion: '16.x'
+              installCommand: 'npm install'
 
-# Run test steps
-- template: azure-pipelines-templates/test-template.yml
-  parameters:
-    testCommand: 'npm run test'
+  - stage: Test  # Stage for running tests
+    displayName: 'Test Stage'
+    jobs:
+      - job: TestJob  # Job for running tests
+        displayName: 'Run Tests'
+        steps:
+          - template: azure-pipelines-templates/test-template.yml  # Reference test template
+            parameters:
+              testCommand: 'npm run test'
 
-# Build steps
-- template: azure-pipelines-templates/build-template.yml
-  parameters:
-    buildCommand: 'npm run build'
+  - stage: Build  # Stage for building the application
+    displayName: 'Build Stage'
+    jobs:
+      - job: BuildJob  # Job for building the application
+        displayName: 'Build Application'
+        steps:
+          - template: azure-pipelines-templates/build-template.yml  # Reference build template
+            parameters:
+              buildCommand: 'npm run build'
 
-# Deploy steps
-- template: azure-pipelines-templates/deploy-template.yml
-  parameters:
-    deployCommand: './deploy.sh'
+  - stage: Deploy  # Stage for deploying the application
+    displayName: 'Deploy Stage'
+    jobs:
+      - job: DeployJob  # Job for deployment
+        displayName: 'Deploy Application'
+        steps:
+          - template: azure-pipelines-templates/deploy-template.yml  # Reference deploy template
+            parameters:
+              deployCommand: './deploy.sh'
