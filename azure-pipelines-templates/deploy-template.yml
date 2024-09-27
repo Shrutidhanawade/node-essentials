@@ -1,0 +1,7 @@
+parameters:
+  deployCommand: './scripts/deploy.sh'
+
+steps:
+- script: |
+    ${{ parameters.deployCommand }}
+  displayName: 'Deploy the application'
